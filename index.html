@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -254,14 +252,20 @@
         outline: 1px solid red;
       }
 
-      /* mala fotka u jmena Taylor M. */
+      /* male zelene M se svetle zelenym pozadim u jmena Taylor M. */
       .mala_fotka_klienta {
+        display: inline-grid;
+        align-items: center;
+        justify-items: center;
         width: 2.5rlh;
         height: 2.5rlh;
+        background-color: #d2f8dc;
+        color: #2e4f21;
+        font-weight: bold;
         border-radius: 0.5rlh;
-        padding-left: 0;
         vertical-align: middle;
         margin-right: 0.5rlh;
+        outline: 1px solid red;
       }
 
       /* velka fotka pres celou sirku stranky */
@@ -521,14 +525,14 @@
         </div>
       </div>
 
-      <!-- pravy sloupec s citatem a malou fotkou -->
+      <!-- pravy sloupec s citatem a malym zelenym M -->
       <div class="citat_vpravo">
         <p>
           "Managing my taxes as a freelancer used to be overwhelming, but Noble
           Finance made it effortless."
         </p>
         <p style="font-size: 0.7rlh">
-          <img class="mala_fotka_klienta" src="Image.png" alt="taylor" />
+          <span class="mala_fotka_klienta">M</span>
           Taylor M., 28 years old
         </p>
       </div>
