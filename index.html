@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noble Finances</title>
+    <style>
+      /* zakladni nastaveni stranky, rlh jednotky a vypnuti spodniho posuvniku */
+      body {
+        background-color: white;
+        margin: 0;
+        font-size: 0.7rlh;
+        font-family: "Work Sans", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* horni zeleny blok se zaoblenym spodkem */
+      .horni_zeleny_blok {
+        background-color: #a0f1bd;
+        height: 37rlh;
+        border-bottom-right-radius: 2rlh;
+        border-bottom-left-radius: 2rlh;
+        outline: 1px solid red;
+      }
+
+      /* horni menu pres grid - 1fr odtlaci tlacitka doprava */
+      nav {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        column-gap: 1rlh;
+        align-items: center;
+        padding: 1rlh 1.5rlh;
+        color: #2e4f21;
+        outline: 1px solid red;
+      }
+
+      .noble-finances {
+        justify-self: start;
+        font-size: 0.8rlh;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .services {
+        justify-self: end;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      /* tlacitko v menu s animaci barvy pri najeti mysi */
+      .book-appointment {
+        background-color: #2e4f21;
+        color: white;
+        padding: 0.6rlh 1.2rlh;
+        border-radius: 1rlh;
+        justify-self: end;
+        white-space: nowrap;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+        cursor: pointer;
+      }
+      .book-appointment:hover {
+        background-color: #fdfdfd;
+        color: #2e4f21;
+      }
+
+      h1 {
+        text-align: left;
+        display: grid;
+        grid-template-columns: auto;
+        justify-self: start;
+        color: #2e4f21;
+        font-size: 3rlh;
+        outline: 1px solid red;
+        padding-top: 5rlh;
+      }
+
+      /* kontejner v hornim bloku - vlevo nadpis, vpravo zemekoule */
+      .container {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-items: left;
+        text-align: center;
+        align-items: start;
+        column-gap: 1rlh;
+        padding-top: 3rlh;
+        outline: 1px solid red;
+        padding-left: 1rlh;
+        padding-right: 1rlh;
+      }
+
+      img {
+        width: 50%;
+        height: auto;
+        outline: 1px solid red;
+        padding-left: 10rlh;
+      }
+
+      .description {
+        text-align: left;
+        color: #2e4f21;
+        outline: 1px solid red;
+        align-self: start;
+        line-height: 1rlh;
+        margin: 0;
+        margin-bottom: 1rlh;
+        margin-top: -2rlh;
+      }
+
+      .connect {
+        background-color: #2e4f21;
+        color: white;
+        padding: 0.6rlh 1.2rlh;
+        border-radius: 1rlh;
+        white-space: nowrap;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+        cursor: pointer;
+        outline: 1px solid red;
+      }
+      .connect:hover {
+        background-color: #fdfdfd;
+        color: #2e4f21;
+      }
+
+      /* nadpisy sekce Services uprostred stranky */
+      .services_dole {
+        text-align: center;
+        color: #2e4f21;
+        outline: 1px solid red;
+        font-size: 0.7rlh;
+      }
+
+      .prvni_moudro {
+        text-align: center;
+        color: #2e4f21;
+        font-size: 3rlh;
+        outline: 1px solid red;
+      }
+
+      .schedule {
+        background-color: #2e4f21;
+        color: white;
+        padding: 0.6rlh 1.2rlh;
+        border-radius: 1rlh;
+        white-space: nowrap;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+        cursor: pointer;
+        outline: 1px solid red;
+      }
+      .schedule:hover {
+        background-color: #fdfdfd;
+        color: #2e4f21;
+      }
+
+      .container_schedule {
+        display: grid;
+        justify-items: center;
+      }
+
+      /* 1. a 3. zelena karta zarovnana vlevo */
+      .levy_zeleny_blok {
+        background-color: #d2f8dc;
+        height: 19rlh;
+        width: 65rlh;
+        border-radius: 1rlh;
+        outline: 1px solid red;
+        margin-left: 2rlh;
+        padding: 2rlh;
+      }
+
+      /* 2. zelena karta zarovnana doprava pres margin-left: auto */
+      .pravy_zeleny_blok {
+        background-color: #d2f8dc;
+        height: 19rlh;
+        width: 65rlh;
+        border-radius: 1rlh;
+        outline: 1px solid red;
+        margin-left: auto;
+        margin-right: 2rlh;
+        padding: 2rlh;
+      }
+
+      /* rozdeleni vnitreku karty na obrazek a text vedle sebe */
+      .levy_blok_uvnitr,
+      .pravy_blok_uvnitr {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-items: center;
+        text-align: left;
+        align-items: center;
+        column-gap: 1rlh;
+        outline: 1px solid red;
+        color: #2e4f21;
+      }
+
+      .nadpis_uvnitr {
+        font-size: 1.8rlh;
+        margin: 0;
+      }
+
+      /* male bile tlacitka uvnitr karet sluzeb */
+      button {
+        background-color: white;
+        color: #2e4f21;
+        border: none;
+        padding: 0.5rlh 0.9rlh;
+        border-radius: 0.5rlh;
+        cursor: pointer;
+        font-size: 0.6rlh;
+        outline: 1px solid red;
+      }
+
+      /* SEKCE HEAR FROM OUR HAPPY CLIENTS - vlevo 3 lidi, vpravo citat */
+      .klienti_container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        column-gap: 3rlh;
+        padding-left: 4rlh;
+        padding-right: 4rlh;
+        color: #2e4f21;
+        outline: 1px solid red;
+      }
+
+      /* jeden obdelnik s povolanim klienta vlevo */
+      .klient_polozka {
+        border-top: 1px solid #2e4f21;
+        padding: 1rlh;
+        cursor: pointer;
+        outline: 1px solid red;
+      }
+
+      /* prvni vybrany klient ma tmave zelene pozadi a bily text */
+      .klient_vybrany {
+        background-color: #2e4f21;
+        color: white;
+        border-radius: 0.6rlh;
+        padding: 1rlh;
+        cursor: pointer;
+        outline: 1px solid red;
+      }
+
+      /* prava cast s velkym citatem a carou nalevo */
+      .citat_vpravo {
+        border-left: 1px solid #2e4f21;
+        padding-left: 3rlh;
+        font-size: 1.8rlh;
+        outline: 1px solid red;
+      }
+
+      /* mala fotka u jmena Taylor M. */
+      .mala_fotka_klienta {
+        width: 2.5rlh;
+        height: 2.5rlh;
+        border-radius: 0.5rlh;
+        padding-left: 0;
+        vertical-align: middle;
+        margin-right: 0.5rlh;
+      }
+
+      /* velka fotka pres celou sirku stranky */
+      .velka_fotka_stred {
+        width: 100%;
+        height: 24rlh;
+        object-fit: cover;
+        padding-left: 0;
+        outline: 1px solid red;
+      }
+
+      /* SEKCE SMART FINANCE - horni radek ma vlevo nadpis a vpravo popis */
+      .smart_hlavicka {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rlh;
+        padding-left: 4rlh;
+        padding-right: 4rlh;
+        align-items: center;
+        color: #2e4f21;
+        outline: 1px solid red;
+      }
+
+      /* 3 sloupce vedle sebe (For Freelancers, Families, Small Businesses) */
+      .smart_tri_sloupce {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 2rlh;
+        padding-left: 4rlh;
+        padding-right: 4rlh;
+        color: #2e4f21;
+        outline: 1px solid red;
+      }
+
+      /* jeden sloupec s horni a levou carou podle predlohy */
+      .jeden_sloupec {
+        border-top: 1px solid #2e4f21;
+        border-left: 1px solid #2e4f21;
+        padding: 1.5rlh;
+        outline: 1px solid red;
+      }
+
+      /* mala ikonka na zacatku kazdeho ze 3 sloupcu */
+      .mala_ikona {
+        width: 2rlh;
+        padding-left: 0;
+      }
+
+      /* SEKCE A CUSTOM BUILT PLAN - vlevo tmavy zeleny box, vpravo obrazek */
+      .dva_boxy_dole {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rlh;
+        padding-left: 4rlh;
+        padding-right: 4rlh;
+        outline: 1px solid red;
+      }
+
+      .tmavy_box_plan {
+        background-color: #2e4f21;
+        color: white;
+        border-radius: 1rlh;
+        padding: 3rlh;
+        outline: 1px solid red;
+      }
+
+      /* svetle zelene tlacitko Learn More uvnitr tmaveho boxu */
+      .tlacitko_learn {
+        background-color: #d2f8dc;
+        color: #2e4f21;
+        padding: 0.6rlh 1.2rlh;
+        border-radius: 1rlh;
+        border: none;
+        font-size: 0.7rlh;
+        cursor: pointer;
+      }
+
+      /* obrazek schodiste napravo od tmaveho boxu */
+      .obrazek_plan {
+        width: 100%;
+        height: 18rlh;
+        object-fit: cover;
+        border-radius: 1rlh;
+        padding-left: 0;
+        outline: 1px solid red;
+      }
+
+      /* PATICKA DOLE - tmave zelene pozadi */
+      .paticka {
+        background-color: #2e4f21;
+        color: white;
+        padding: 2rlh 3rlh;
+        outline: 1px solid red;
+      }
+
+      /* horni radek v paticce (logo a tlacitka) */
+      .paticka_nahore {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        column-gap: 1rlh;
+        align-items: center;
+        outline: 1px solid red;
+      }
+
+      /* spodni radek v paticce (text vlevo a copyright vpravo) */
+      .paticka_dole {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        padding-top: 4rlh;
+        font-size: 0.6rlh;
+        outline: 1px solid red;
+      }
+
+      /* RESPONZIVITA - pri zmenseni obrazovky se veci schovaji nebo daji pod sebe */
+      @media (max-width: 768px) {
+        .appointment {
+          display: none;
+        }
+        /* schova obrazky a vedlejsi sloupce aby to na mobilu nepretekalo */
+        .zmizet_na_mobilu {
+          display: none;
+        }
+        /* zmeni sirku zelenych karet aby nebyly moc siroke */
+        .levy_zeleny_blok,
+        .pravy_zeleny_blok {
+          width: auto;
+          margin-left: 1rlh;
+          margin-right: 1rlh;
+        }
+        /* da 3 sloupce v sekci Smart Finance pod sebe misto aby zmizely */
+        .smart_tri_sloupce {
+          grid-template-columns: 1fr;
+          row-gap: 2rlh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HORNI ZELENY BLOK -->
+    <div class="horni_zeleny_blok">
+      <nav>
+        <span class="noble-finances">Noble Finances</span>
+        <span class="services">Services</span>
+        <span class="book-appointment"
+          >Book<span class="appointment"> an appointment</span></span
+        >
+      </nav>
+      <div class="container">
+        <h1>
+          Financial Clarity You <br />
+          Can Trust
+        </h1>
+        <img class="zmizet_na_mobilu" src="Image.png" alt="zeme" />
+        <p class="description">
+          Trusted financial guidance for every stage of life and business since
+          1987
+        </p>
+        <br />
+        <p class="connect">Connect with our experts</p>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br />
+
+    <!-- UVOD K SEKCI SERVICES -->
+    <p class="services_dole">Services</p>
+    <p class="prvni_moudro">
+      Let us handle the numbers, <br />
+      so you can handle your success.
+    </p>
+    <p class="services_dole">
+      Serving individuals and small businesses since 1987
+    </p>
+    <div class="container_schedule">
+      <p class="schedule">Schedule a call</p>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br />
+
+    <!-- 1. ZELENA KARTA VLEVO -->
+    <div class="levy_zeleny_blok">
+      <div class="levy_blok_uvnitr">
+        <img class="zmizet_na_mobilu" src="Image.png" alt="mobil" />
+        <div>
+          <p class="nadpis_uvnitr">Tax Preparation & Filing</p>
+          <p>
+            Accurately prepare and file personal and business tax returns to
+            maximize deductions and ensure compliance.
+          </p>
+          <button>1099 taxes</button>
+          <button>Dependents</button>
+          <button>Trust Taxes</button>
+        </div>
+      </div>
+    </div>
+
+    <br /><br /><br />
+
+    <!-- 2. ZELENA KARTA VPRAVO -->
+    <div class="pravy_zeleny_blok">
+      <div class="pravy_blok_uvnitr">
+        <div>
+          <p class="nadpis_uvnitr">IRS Audit Assistance</p>
+          <p>
+            Offer expert guidance and representation to resolve tax audits and
+            disputes with confidence.
+          </p>
+          <button>1099 taxes</button>
+          <button>Dependents</button>
+          <button>Trust Taxes</button>
+        </div>
+        <img class="zmizet_na_mobilu" src="Image.png" alt="graf" />
+      </div>
+    </div>
+
+    <br /><br /><br />
+
+    <!-- 3. ZELENA KARTA VLEVO -->
+    <div class="levy_zeleny_blok">
+      <div class="levy_blok_uvnitr">
+        <img class="zmizet_na_mobilu" src="Image.png" alt="vaha" />
+        <div>
+          <p class="nadpis_uvnitr">Bookkeeping & Accounting</p>
+          <p>
+            Maintain organized financial records and provide clear reports to
+            support business growth and financial health.
+          </p>
+          <button>1099 taxes</button>
+          <button>Dependents</button>
+          <button>Trust Taxes</button>
+        </div>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br />
+
+    <!-- SEKCE HEAR FROM OUR HAPPY CLIENTS -->
+    <p class="prvni_moudro">Hear From Our Happy Clients</p>
+    <br />
+    <div class="klienti_container">
+      <!-- levy sloupec s vyberem 3 klientu -->
+      <div class="zmizet_na_mobilu">
+        <div class="klient_vybrany">
+          <p><b>Graphic Designer</b></p>
+          <p>Ontario, Canada</p>
+        </div>
+        <br />
+        <div class="klient_polozka">
+          <p><b>Commercial Photographer</b></p>
+          <p>Ontario, Canada</p>
+        </div>
+        <br />
+        <div class="klient_polozka">
+          <p><b>Stylist</b></p>
+          <p>Austin, Texas</p>
+        </div>
+      </div>
+
+      <!-- pravy sloupec s citatem a malou fotkou -->
+      <div class="citat_vpravo">
+        <p>
+          "Managing my taxes as a freelancer used to be overwhelming, but Noble
+          Finance made it effortless."
+        </p>
+        <p style="font-size: 0.7rlh">
+          <img class="mala_fotka_klienta" src="Image.png" alt="taylor" />
+          Taylor M., 28 years old
+        </p>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br />
+
+    <!-- VELKA FOTKA PRES CELOU SIRKU -->
+    <img class="velka_fotka_stred" src="Image.png" alt="kancelar" />
+
+    <br /><br /><br /><br /><br />
+
+    <!-- SEKCE SMART FINANCE FOR EVERYONE -->
+    <div class="smart_hlavicka">
+      <p class="prvni_moudro" style="text-align: left">
+        Smart Finance for everyone
+      </p>
+      <p class="zmizet_na_mobilu">
+        At Noble Finance, we believe that financial confidence should be
+        accessible to everyone—whether you’re a solo entrepreneur, managing a
+        growing family, or running a small business.
+      </p>
+    </div>
+
+    <br /><br />
+
+    <!-- 3 SLOUPCE POD SEBOU NEBO VEDLE SEBE -->
+    <div class="smart_tri_sloupce">
+      <div class="jeden_sloupec">
+        <img class="mala_ikona" src="Image.png" alt="ikona1" />
+        <h3>For Freelancers</h3>
+        <p><b>Simplicity & Control</b></p>
+        <p>
+          Stay in charge of your income with seamless expense tracking,
+          automated deductions, and smart tax strategies—so you can focus on
+          doing what you love.
+        </p>
+      </div>
+
+      <div class="jeden_sloupec">
+        <img class="mala_ikona" src="Image.png" alt="ikona2" />
+        <h3>For Families</h3>
+        <p><b>Stability & Security</b></p>
+        <p>
+          From budgeting tools to tax-saving insights, we help you plan for the
+          future, maximize refunds, and keep your household finances running
+          smoothly.
+        </p>
+      </div>
+
+      <div class="jeden_sloupec">
+        <img class="mala_ikona" src="Image.png" alt="ikona3" />
+        <h3>For Small Businesses</h3>
+        <p><b>Stability & Security</b></p>
+        <p>
+          Effortless bookkeeping, payroll solutions, and expert-backed tax
+          support—so you spend less time on finances and more time scaling your
+          business.
+        </p>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br />
+
+    <!-- DVA BOXY VEDLE SEBE (TMAVY ZELENY BOX + OBRAZEK) -->
+    <div class="dva_boxy_dole">
+      <div class="tmavy_box_plan">
+        <p style="font-size: 2rlh; margin-top: 0">
+          A custom built plan for you
+        </p>
+        <p>
+          At Noble Finance, we believe that tax filing should be seamless,
+          accurate, and stress-free. Our approach is centered on three key
+          pillars: simplicity, accuracy, and security.
+        </p>
+        <br />
+        <button class="tlacitko_learn">Learn More</button>
+      </div>
+      <img
+        class="obrazek_plan zmizet_na_mobilu"
+        src="Image.png"
+        alt="schodiste"
+      />
+    </div>
+
+    <br /><br /><br /><br /><br />
+
+    <!-- POSLEDNI TEXT S TLACITKEM PRED PATICKOU -->
+    <p class="prvni_moudro">
+      We believe that tax filing should be <br />
+      seamless, accurate, and stress-free. <br />
+      Get started with Noble Finance today!
+    </p>
+    <div class="container_schedule">
+      <p class="schedule">Connect with our experts</p>
+    </div>
+
+    <br /><br /><br /><br /><br />
+
+    <!-- SPODNI PATICKA -->
+    <div class="paticka">
+      <div class="paticka_nahore">
+        <span class="noble-finances">Noble Finances</span>
+        <span class="services">Services</span>
+        <button class="tlacitko_learn">Book an appointment</button>
+      </div>
+
+      <div class="paticka_dole">
+        <div>
+          <p><b>Financial Clarity You Can Trust</b></p>
+          <p>
+            Trusted financial guidance for every stage of life and business
+            since 1987
+          </p>
+        </div>
+        <p class="zmizet_na_mobilu">© 2025 All Rights Reserved</p>
+      </div>
+    </div>
+  </body>
+</html>
